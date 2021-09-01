@@ -20,6 +20,10 @@ def products(request):
     products = Product.objects.all()
     return render(request,'custmanageapp/products.html',{'products':products})
 
-def customer(request):
-    return render(request,'custmanageapp/customer.html')
+def customer(request, pk):
+    customer = Customer.objects.get(id = pk)
+    orders = customer.order_set.all()
+    order_count = orders.count()
+    context = {'customer':customer, 'orders':orders, 'order_count':order_count}
+    return render(request,'custmanageapp/customer.html',context)
 
